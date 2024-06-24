@@ -115,59 +115,7 @@ jobs:
         cd openwrt
         source ${BUILD_PATH}/common.sh && Diy_menu5
 
-    - name: 添加quic-go包定义
-      run: |
-        mkdir -p openwrt/package/feeds/packages/quic-go
-        cat << 'EOF' > openwrt/package/feeds/packages/quic-go/Makefile
-        include $(TOPDIR)/rules.mk
 
-        PKG_NAME:=quic-go
-        PKG_VERSION:=latest
-        PKG_RELEASE:=1
-
-        PKG_SOURCE_PROTO:=git
-        PKG_SOURCE_URL:=https://github.com/lucas-clemente/quic-go.git
-        PKG_SOURCE_VERSION:=HEAD
-        PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-        PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-
-        PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
-        PKG_BUILD_DEPENDS:=golang
-
-        include $(INCLUDE_DIR)/package.mk
-
-        define Package/quic-go
-          SECTION:=net
-          CATEGORY:=Network
-          TITLE:=quic-go
-          DEPENDS:=+golang
-        endef
-
-        define Package/quic-go/description
-          An implementation of the QUIC protocol in Go.
-        endef
-
-        define Build/Prepare
-          mkdir -p $(PKG_BUILD_DIR)/src/github.com/lucas-clemente/
-          ln -sf $(PKG_BUILD_DIR) $(PKG_BUILD_DIR)/src/github.com/lucas-clemente/quic-go
-        endef
-
-        define Build/Configure
-          (cd $(PKG_BUILD_DIR)/src/github.com/lucas-clemente/quic-go; go mod tidy)
-        endef
-
-        define Build/Compile
-          (cd $(PKG_BUILD_DIR)/src/github.com/lucas-clemente/quic-go; \
-          GOARCH=$(GO_ARCH) GOOS=$(GO_OS) go build -o $(PKG_BUILD_DIR)/quic-go)
-        endef
-
-        define Package/quic-go/install
-          $(INSTALL_DIR) $(1)/usr/bin
-          $(INSTALL_BIN) $(PKG_BUILD_DIR)/quic-go $(1)/usr/bin/quic-go
-        endef
-
-        $(eval $(call BuildPackage,quic-go))
-        EOF
 
     - name: 生成"${{matrix.target}}"配置文件
       run: |
