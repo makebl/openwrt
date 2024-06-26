@@ -59,19 +59,10 @@ jobs:
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
         
     - name: 清理空间
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # 这可能会移除实际需要的工具
-        # 如果设置为“true”，但释放约6 GB
-        tool-cache: true
-        
-        # 所有这些都默认为true
-        # "false" 可以随时关闭
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        swap-storage: true       
+      working-directory: /workdir
+      run: |
+       git clone $GITHUB_LINK -b $REPO_BRANCH openwrt
+       ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
     - name: 部署编译环境
       env:
