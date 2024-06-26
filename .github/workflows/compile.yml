@@ -59,7 +59,7 @@ jobs:
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
         
     - name: 清理空间
-      working-directory: /workdir
+      working-directory: /openwrt
       run: |
        git clone $GITHUB_LINK -b $REPO_BRANCH openwrt
        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
