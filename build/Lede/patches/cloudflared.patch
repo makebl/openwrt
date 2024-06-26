@@ -1,7 +1,7 @@
-diff --git a/lede\feeds\packages\net\cloudflared\Makefile b/lede\feeds\packages\net\cloudflared\Makefile
+diff --git a/lede/feeds/packages/net/cloudflared/Makefile b/lede/feeds/packages/net/cloudflared/Makefile
 index 5e654e5..a38be1c 100644
---- a/lede\feeds\packages\net\cloudflared\Makefile
-+++ b/lede\feeds\packages\net\cloudflared\Makefile
+--- a/lede/feeds/packages/net/cloudflared/Makefile
++++ b/lede/feeds/packages/net/cloudflared/Makefile
 @@ -5,12 +5,12 @@
  include $(TOPDIR)/rules.mk
  
