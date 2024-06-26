@@ -1,7 +1,7 @@
 diff --git a/packages/net/cloudflared/Makefile b/packages/net/cloudflared/Makefile
 index 5e654e5..a38be1c 100644
---- a/test1.txt
-+++ b/test2.txt
+--- a/packages/net/cloudflared/Makefile
++++ b/packages/net/cloudflared/Makefile
 @@ -5,12 +5,12 @@
  include $(TOPDIR)/rules.mk
  
