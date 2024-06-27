@@ -1,3 +1,8 @@
+#
+# 编译主程序,请勿修改文件名称（compile.yml）
+#
+
+
 name: 编译主程序
 on:
   push:
@@ -33,29 +38,10 @@ jobs:
       matrix:
         target: [Lede]
 
-    steps:
+    steps:    
+        
     - name: 准备结束
       uses: actions/checkout@v4
-
-
-
-    - name: 释放磁盘空间
-      uses: easimon/maximize-build-space@master
-      with: 
-        root-reserve-mb: 2048
-        swap-size-mb: 1
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-        remove-docker-images: 'true'
-
-    - name: 释放磁盘空间完成
-      run: |
-        echo "Free up disk space complete"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
 
     - name: 检测文件和对比上游版本
       run: |
@@ -78,6 +64,20 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
         
+    - name: 清理空间
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # 这可能会移除实际需要的工具
+        # 如果设置为“true”，但释放约6 GB
+        tool-cache: true
+        
+        # 所有这些都默认为true
+        # "false" 可以随时关闭
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true     
         
     - name: 部署编译环境
       env:
@@ -88,6 +88,11 @@ jobs:
         sudo mkdir -p /${{ env.DIY_WORK }}
         sudo chown ${USER}:${GROUPS} /${{ env.DIY_WORK }}
 
+    #- name: 升级rustc到1.70.0
+      #run: |
+                #curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.70.0
+                #source $HOME/.cargo/env
+                
     - name: 下载"${{matrix.target}}"源码
       working-directory: /${{ env.DIY_WORK }}
       run: |
@@ -115,8 +120,6 @@ jobs:
       run: |
         cd openwrt
         source ${BUILD_PATH}/common.sh && Diy_menu5
-
-
 
     - name: 生成"${{matrix.target}}"配置文件
       run: |
@@ -223,7 +226,6 @@ jobs:
         artifacts: "Github_Api/*"
         allowUpdates: true
         body: ${{ env.Tongzhi_Date }}
-
 
     - name: Telegram或pushplus信息通知
       if: env.PUSH_PLUS_TOKEN && env.INFORMATION_NOTICE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.INFORMATION_NOTICE == 'TG'
