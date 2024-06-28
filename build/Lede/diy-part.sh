@@ -3,7 +3,7 @@
 # DIY扩展二合一了，在此处可以增加插件
 # 自行拉取插件之前请SSH连接进入固件配置里面确认过没有你要的插件再单独拉取你需要的插件
 # 不要一下就拉取别人一个插件包N多插件的，多了没用，增加编译错误，自己需要的才好
-export cloudflared_Core="1"             #默认为1即可
+
 
 
 # 后台IP设置
@@ -51,7 +51,8 @@ export Password_free_login="1"               # 设置首次登录后台密码为
 export AdGuardHome_Core="0"                 # 编译固件时自动增加AdGuardHome插件和AdGuardHome插件核心,需要注意的是一个核心20多MB的,小闪存机子搞不来(1为启用命令,填0为不作修改)
 
 
-
+# 增加cloudflared插件和核心
+export cloudflared_Core="0"                  # 编译固件时自动增加luci-app-cloudflared插件和cloudflared插件核心,(1为启用命令,填0为不作修改)  
 
 
 # 禁用ssrplus和passwall的NaiveProxy
