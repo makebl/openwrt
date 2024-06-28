@@ -227,4 +227,26 @@ jobs:
         allowUpdates: true
         body: ${{ env.Tongzhi_Date }}
 
+    - name: Telegram或pushplus信息通知
+      if: env.PUSH_PLUS_TOKEN && env.INFORMATION_NOTICE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.INFORMATION_NOTICE == 'TG'
+      run: |
+        curl "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=
+
+           您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
+
+          🛠 编译版本：${{ env.Openwrt_Version }}
+
+          🖥 内核版本：${{ env.LINUX_KERNEL }}
+
+          🎈 编译时间：${{ env.Compte_Date }}
+
+          ⏰ 编译用时：${{ env.Tongzhi_Date }}
+
+          🎉 发布地址：${{ env.Github_Release }}
+
+          🌴 固件已经编译完成 🎈！！！
+
+        fi
+        fi
+
 
