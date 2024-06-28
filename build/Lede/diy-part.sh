@@ -52,7 +52,7 @@ export AdGuardHome_Core="0"                 # 编译固件时自动增加AdGuard
 
 
 # 增加cloudflared插件和核心
-export cloudflared_Core="0"                  # 编译固件时自动增加luci-app-cloudflared插件和cloudflared插件核心,(1为启用命令,填0为不作修改)  
+export cloudflared_Core="1"                  # 编译固件时自动增加luci-app-cloudflared插件和cloudflared插件核心,(1为启用命令,填0为不作修改)  
 
 
 # 禁用ssrplus和passwall的NaiveProxy
