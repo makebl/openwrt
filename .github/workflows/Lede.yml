@@ -257,75 +257,36 @@ jobs:
         source ${BUILD_PATH}/common.sh && build_openwrt
         
     - name: Telegram或pushplus信息通知
-  if: env.PUSH_PLUS_TOKEN && env.INFORMATION_NOTICE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.INFORMATION_NOTICE == 'TG' || env.WX_TOKEN && env.INFORMATION_NOTICE == 'WX'
-  run: |
-    if [[ "${{ env.INFORMATION_NOTICE }}" == "TG" ]]; then
-      if [[ "${{steps.compile.outcome}}" == 'success' ]]; then
-        curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-             --data "text=您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
+      if: env.PUSH_PLUS_TOKEN && env.INFORMATION_NOTICE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.INFORMATION_NOTICE == 'TG' || env.WX_TOKEN && env.INFORMATION_NOTICE == 'WX'
+      run: |
+       if [[ "${{ env.INFORMATION_NOTICE }}" == "TG" ]]; then
+       curl -k -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+           -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+           -d text="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！\n\n🛠 编译版本：${{ env.Openwrt_Version }}\n🖥 内核版本：${{ env.LINUX_KERNEL }}\n🎈 编译时间：${{ env.Compte_Date }}\n⏰ 编译用时：${{ env.Compile_Duration }}\n🎉 发布地址：${{ env.Github_Release }}\n🌴 固件已经编译完成 🎈！！！"
+       fi
 
-🛠 编译版本：${{ env.Openwrt_Version }}
+       if [[ "${{ env.INFORMATION_NOTICE }}" == "PUSH" ]]; then
+       if [[ "${{steps.gitpush.outcome}}" == 'success' ]]; then
+        curl -k -X POST "http://www.pushplus.plus/send" \
+             --data token="${{ secrets.PUSH_PLUS_TOKEN }}" \
+             --data title="固件编译完成通知" \
+             --data content="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！\n\n🛠 编译版本：${{ env.Openwrt_Version }}\n🖥 内核版本：${{ env.LINUX_KERNEL }}\n🎈 编译时间：${{ env.Compte_Date }}\n⏰ 编译用时：${{ env.Compile_Duration }}\n🎉 发布地址：${{ env.Github_Release }}\n🌴 固件已经编译完成 🎈！！！"
+       fi
+       fi
 
-🖥 内核版本：${{ env.LINUX_KERNEL }}
-
-🎈 编译时间：${{ env.Compte_Date }}
-
-⏰ 编译用时：${{ env.BUILD_TIME }}
-
-🎉 发布地址：${{ env.Github_Release }}
-
-🌴 固件已经编译完成 🎈！！！" \
-             "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" >/dev/null 2>&1 && echo "Telegram通知成功"
-      fi
-    fi
-
-    if [[ "${{ env.INFORMATION_NOTICE }}" == "PUSH" ]]; then
-      if [[ "${{steps.compile.outcome}}" == 'success' ]]; then
-        curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" \
-             --data title="[${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}]编译成功" \
-             --data "content=您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
-
-🛠 编译版本：${{ env.Openwrt_Version }}
-
-🖥 内核版本：${{ env.LINUX_KERNEL }}
-
-🎈 编译时间：${{ env.Compte_Date }}
-
-⏰ 编译用时：${{ env.BUILD_TIME }}
-
-🎉 发布地址：${{ env.Github_Release }}
-
-🌴 固件已经编译完成 🎈！！！" \
-             "http://www.pushplus.plus/send" >/dev/null 2>&1 && echo "PUSH通知成功"
-      fi
-    fi
-
-    if [[ "${{ env.INFORMATION_NOTICE }}" == "WX" ]]; then
-      if [[ "${{steps.gitpush.outcome}}" == 'success' ]] && [[ "${{steps.compile.outcome}}" == 'success' ]]; then
-        curl -k --data token="${{ secrets.WX_TOKEN }}" \
-             --data title="编译成功" \
-             --data "message=您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
-
-🛠 编译版本：${{ env.Openwrt_Version }}
-
-🖥 内核版本：${{ env.LINUX_KERNEL }}
-
-🎈 编译时间：${{ env.Compte_Date }}
-
-⏰ 编译用时：${{ env.BUILD_TIME }}
-
-🎉 发布地址：${{ env.Github_Release }}
-
-🌴 固件已经编译完成 🎈！！！" \
-             "http://${{ secrets.CURL }}/push?token=${{ secrets.WX_TOKEN }}&" >/dev/null 2>&1 && echo "WX通知成功"
-      else
-        curl -k --data token="${{ secrets.WX_TOKEN }}" \
+       if [[ "${{ env.INFORMATION_NOTICE }}" == "WX" ]]; then
+       if [[ "${{steps.gitpush.outcome}}" == 'success' ]] && [[ "${{steps.compile.outcome}}" == 'success' ]]; then
+        curl -k -X POST "http://${{ secrets.CURL }}/push?token=${{ secrets.WX_TOKEN }}&" \
+             --data token="${{ secrets.WX_TOKEN }}" \
+             --data title="固件编译完成通知" \
+             --data content="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！\n\n🛠 编译版本：${{ env.Openwrt_Version }}\n🖥 内核版本：${{ env.LINUX_KERNEL }}\n🎈 编译时间：${{ env.Compte_Date }}\n⏰ 编译用时：${{ env.Compile_Duration }}\n🎉 发布地址：${{ env.Github_Release }}\n🌴 固件已经编译完成 🎈！！！"
+       else
+        curl -k -X POST "http://${{ secrets.CURL }}/push?token=${{ secrets.WX_TOKEN }}&" \
+             --data token="${{ secrets.WX_TOKEN }}" \
              --data title="触发启动失败" \
-             --data "message=💥 主人❌ ：上游扩展错误或者脚本错误, 触发启动【${{ env.FOLDER_NAME }}】失败, 请点击触发脚本步骤查看详情!(${{env.Tongzhi_Date}})" \
-             "http://${{ secrets.CURL }}/push?token=${{ secrets.WX_TOKEN }}&" >/dev/null 2>&1 && echo "WX通知失败"
+             --data message="💥主人❌ ：上游扩展错误或者脚本错误,触发启动【${{ env.FOLDER_NAME }}】失败,请点击触发脚本步骤查看详情！(${{env.Tongzhi_Date}})"
         exit 1
-      fi
-    fi
-
+       fi
+       fi
 
 
