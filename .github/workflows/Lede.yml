@@ -274,8 +274,7 @@ jobs:
           🎉 发布地址：${{ env.Github_Release }}
 
           🌴 固件已经编译完成 🎈！！！
-
-        fi
+          " >/dev/null 2>&1 && echo "ok..."
         fi
 
 
