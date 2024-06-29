@@ -269,7 +269,7 @@ jobs:
 
           🎈 编译时间：${{ env.Compte_Date }}
 
-          ⏰ 编译用时：${{ env.Firmware_Date }}
+          ⏰ 编译用时：${{ env.Upgrade_Date }}
 
           🎉 发布地址：${{ env.Github_Release }}
 
