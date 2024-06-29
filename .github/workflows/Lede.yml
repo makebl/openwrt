@@ -266,7 +266,7 @@ jobs:
             🛠 编译版本：${{ env.Openwrt_Version }}<br>\
             🖥 内核版本：${{ env.LINUX_KERNEL }}<br>\
            🎈 编译时间：${{ env.Compte_Date }}<br>\
-           ⏰ 编译用时：${{ env.Compile_Duration }}<br>\
+           ⏰ 编译用时：${{ env.BUILD_TIME }}<br>\
            🎉 发布地址：${{ env.Github_Release }}<br>\
            🌴 固件已经编译完成 🎈！！！"
        fi
@@ -280,7 +280,7 @@ jobs:
           🛠 编译版本：${{ env.Openwrt_Version }}<br>\
            🖥 内核版本：${{ env.LINUX_KERNEL }}<br>\
           🎈 编译时间：${{ env.Compte_Date }}<br>\
-          ⏰ 编译用时：${{ env.Compile_Duration }}<br>\
+          ⏰ 编译用时：${{ env.BUILD_TIME }}<br>\
           🎉 发布地址：${{ env.Github_Release }}<br>\
           🌴 固件已经编译完成 🎈！！！"
        fi
@@ -295,7 +295,7 @@ jobs:
            🛠 编译版本：${{ env.Openwrt_Version }}<br>\
            🖥 内核版本：${{ env.LINUX_KERNEL }}<br>\
           🎈 编译时间：${{ env.Compte_Date }}<br>\
-          ⏰ 编译用时：${{ env.Compile_Duration }}<br>\
+          ⏰ 编译用时：${{ env.BUILD_TIME }}<br>\
           🎉 发布地址：${{ env.Github_Release }}<br>\
           🌴 固件已经编译完成 🎈！！！"
         else
