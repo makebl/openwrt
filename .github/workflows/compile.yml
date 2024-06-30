@@ -260,7 +260,9 @@ jobs:
         curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
              --data text="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
 
+          🛠 源码分支：${{ env.REPO_BRANCH }}
           🛠 编译版本：${{ env.Openwrt_Version }}
+          🛠 LUCI版本：${{ env.LUCI_EDITION }}
           🖥 内核版本：${{ env.LINUX_KERNEL }}
          🎈 编译时间：${{ env.Compte_Date }}
          ⏰ 编译用时：${{ env.BUILD_TIME }}
