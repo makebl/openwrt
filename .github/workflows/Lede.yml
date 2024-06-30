@@ -168,7 +168,8 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /${{ env.DIY_WORK }}
         sudo chown $USER:$GROUPS /${{ env.DIY_WORK }}
-    
+        sudo timedatectl set-timezone "$TZ"
+
     - name: 下载"${{ matrix.target }}-${{ github.event.inputs.REPO_BRANCH }}"源码
       working-directory: /${{ env.DIY_WORK }}
       run: |
@@ -176,7 +177,10 @@ jobs:
         ln -sf /${{ env.DIY_WORK }}/openwrt ${GITHUB_WORKSPACE}/openwrt
         cp -Rf ${GITHUB_WORKSPACE}/build ${GITHUB_WORKSPACE}/openwrt/build
         chmod -R +x ${GITHUB_WORKSPACE}/openwrt/build
-    
+        echo "编译开始时间..."
+        START_TIME=`date +'%Y-%m-%d %H:%M:%S'`
+        echo "START_SECONDS=$(date --date="$START_TIME" +%s)" >> $GITHUB_ENV
+        
     - name: 公 告
       if: env.REPO_TOKEN
       run: |
@@ -263,8 +267,10 @@ jobs:
        if [[ "${{steps.compile.outcome}}" == 'success' ]]; then
         curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
              --data text="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
-
+             
+          🛠 源码分支：${{ env.REPO_BRANCH }}
           🛠 编译版本：${{ env.Openwrt_Version }}
+          🛠 LUCI版本：${{ env.LUCI_EDITION }}
           🖥 内核版本：${{ env.LINUX_KERNEL }}
          🎈 编译时间：${{ env.Compte_Date }}
          ⏰ 编译用时：${{ env.BUILD_TIME }}
