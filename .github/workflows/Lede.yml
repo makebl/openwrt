@@ -266,7 +266,7 @@ jobs:
        if [[ "${{ env.INFORMATION_NOTICE }}" == "TG" ]]; then
        if [[ "${{steps.compile.outcome}}" == 'success' ]]; then
         curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-             --data text="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
+             --data text="您的${{ env.TARGET_PROFILE }}固件成功编译完成了！
              
           🛠 源码分支：${{ env.REPO_BRANCH }}
           🛠 编译版本：${{ env.Openwrt_Version }}
