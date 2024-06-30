@@ -268,15 +268,17 @@ jobs:
         curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
              --data text="您的${{ env.TARGET_PROFILE }}固件成功编译完成了！
              
+          🛠 编译仓库：${{ env.WAREHOUSE_MAN }}  
           🛠 源码分支：${{ env.REPO_BRANCH }}
           🛠 编译版本：${{ env.Openwrt_Version }}
           🛠 LUCI版本：${{ env.LUCI_EDITION }}
           🖥 内核版本：${{ env.LINUX_KERNEL }}
          🎈 编译时间：${{ env.Compte_Date }}
          ⏰ 编译用时：${{ env.BUILD_TIME }}
+         ⏰ 累计编译：${{ env.RUN_NUMBER }}
          🎉 发布地址：${{ env.Github_Release }}
          🌴 固件已经编译完成 🎈！！！" \
-        "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" >/dev/null 2>&1 && echo "Telegram通知成功"
+                               "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" >/dev/null 2>&1 && echo "Telegram通知成功"
        fi
        fi
 
