@@ -217,7 +217,7 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
         artifacts: "${{ env.FIRMWARE_PATH }}/*"  # 直接使用字符串，不需要多行语法
-        body: >-
+        body: |
           🎁 编译仓库：${{ env.WAREHOUSE_MAN }}  
           🌴 源码分支：${{ env.REPO_BRANCH }}
           🔥 编译版本：${{ env.Openwrt_Version }}
