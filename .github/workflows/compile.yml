@@ -254,14 +254,15 @@ jobs:
         curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
              --data text="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
 
-          🛠 源码分支：${{ env.REPO_BRANCH }}
-          🛠 编译版本：${{ env.Openwrt_Version }}
-          🛠 LUCI版本：${{ env.LUCI_EDITION }}
-          🖥 内核版本：${{ env.LINUX_KERNEL }}
-         🎈 编译时间：${{ env.Compte_Date }}
-         ⏰ 编译用时：${{ env.BUILD_TIME }}
+         🎁 编译仓库：${{ env.WAREHOUSE_MAN }}  
+         🌴 源码分支：${{ env.REPO_BRANCH }}
+         🔥 编译版本：${{ env.Openwrt_Version }}
+         🛸 LUCI版本：${{ env.LUCI_EDITION }}
+         ✨ 内核版本：${{ env.LINUX_KERNEL }}
+         ⏰ 编译时间：${{ env.Compte_Date }}
+         ⏰ 累计编译：${{ env.RUN_NUMBER }}
          🎉 发布地址：${{ env.Github_Release }}
-         🌴 固件已经编译完成 🎈！！！" \
+         🏅 固件已经编译完成 🎈！！！" \
         "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" >/dev/null 2>&1 && echo "Telegram通知成功"
        fi
        fi
@@ -272,12 +273,15 @@ jobs:
              --data title="[${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}]编译成功" \
              --data content="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
 
-          🛠 编译版本：${{ env.Openwrt_Version }}
-          🖥 内核版本：${{ env.LINUX_KERNEL }}
-         🎈 编译时间：${{ env.Compte_Date }}
-         ⏰ 编译用时：${{ env.BUILD_TIME }}
+         🎁 编译仓库：${{ env.WAREHOUSE_MAN }}  
+         🌴 源码分支：${{ env.REPO_BRANCH }}
+         🔥 编译版本：${{ env.Openwrt_Version }}
+         🛸 LUCI版本：${{ env.LUCI_EDITION }}
+         ✨ 内核版本：${{ env.LINUX_KERNEL }}
+         ⏰ 编译时间：${{ env.Compte_Date }}
+         ⏰ 累计编译：${{ env.RUN_NUMBER }}
          🎉 发布地址：${{ env.Github_Release }}
-         🌴 固件已经编译完成 🎈！！！" \
+         🏅 固件已经编译完成 🎈！！！" \
              "http://www.pushplus.plus/send" >/dev/null 2>&1 && echo "PUSH通知成功"
         fi
         fi
@@ -288,12 +292,15 @@ jobs:
              --data title="编译成功" \
              --data message="您的${{ env.FIRMWARE_MESSAGE }}固件成功编译完成了！
 
-          🛠 编译版本：${{ env.Openwrt_Version }}
-          🖥 内核版本：${{ env.LINUX_KERNEL }}
-         🎈 编译时间：${{ env.Compte_Date }}
-         ⏰ 编译用时：${{ env.BUILD_TIME }}
+         🎁 编译仓库：${{ env.WAREHOUSE_MAN }}  
+         🌴 源码分支：${{ env.REPO_BRANCH }}
+         🔥 编译版本：${{ env.Openwrt_Version }}
+         🛸 LUCI版本：${{ env.LUCI_EDITION }}
+         ✨ 内核版本：${{ env.LINUX_KERNEL }}
+         ⏰ 编译时间：${{ env.Compte_Date }}
+         ⏰ 累计编译：${{ env.RUN_NUMBER }}
          🎉 发布地址：${{ env.Github_Release }}
-         🌴 固件已经编译完成 🎈！！！" \
+         🏅 固件已经编译完成 🎈！！！" \
              "http://${{ secrets.CURL }}/push?token=${{ secrets.WX_TOKEN }}&" >/dev/null 2>&1 && echo "WX通知成功"
        else
         curl -k --data token="${{ secrets.WX_TOKEN }}" \
