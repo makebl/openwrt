@@ -66,7 +66,7 @@ export Disable_autosamba="0"                 # 去掉源码默认自选的luci-a
 
 # 强制显示2500M和全双工（默认PVE下VirtIO不识别）
 # sed -i '/exit 0/i\ethtool -s eth0 speed 10000 duplex full' /etc/rc.local
-
+ethtool -s eth0 speed 10000 duplex full
 # 手动更换默认主题
 # uci set luci.main.mediaurlbase='/luci-static/neobird' && uci commit luci
 
