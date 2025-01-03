@@ -1,6 +1,7 @@
 diff --git a/package/lean/autocore/files/x86/autocore b/package/lean/autocore/files/x86/autocore
-index ecae6d7..c45d660 100644
---- a/package/lean/autocore/files/x86/autocore+++ b/package/lean/autocore/files/x86/autocore
+index 667d22a..a8f3c94 100644
+--- a/package/lean/autocore/files/x86/autocore
++++ b/package/lean/autocore/files/x86/autocore
 @@ -25,36 +25,13 @@ start()
  	a=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq)
  	b=$(echo -n ' : ')
@@ -9,7 +10,7 @@ index ecae6d7..c45d660 100644
 +	d=$(echo -n ' Core ')
  	e=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
 -	f=$(echo -n 'T ')
--	g=$(dmesg | grep 'DMI:' | awk -F ',' '{print $1 }' | awk -F ':' '{print $2 }')
+-	g=$(dmesg | grep 'DMI:' | awk -F ',' '{print $1 }' | awk -F ':' '{print $2 }' | head -n 1)
 -	
 -	if [ -d /sys/devices/cpu_atom/ ]; then
 -    pcore=$(cat /sys/devices/cpu_core/cpus | awk -F- '{print $2}') 
