@@ -66,11 +66,7 @@ export Disable_autosamba="0"                 # 去掉源码默认自选的luci-a
 
 # 手动更换默认主题
 # uci set luci.main.mediaurlbase='/luci-static/neobird' && uci commit luci
-cd openwrt
-sed -i 's@src-git luci@# src-git luci@g' feeds.conf.default
-sed -i 's@## src-git luci@src-git luci@g' feeds.conf.default
-./scripts/feeds update -a
-./scripts/feeds install -a
+
 
 
 #rm -rf feeds/packages/lang/golang
