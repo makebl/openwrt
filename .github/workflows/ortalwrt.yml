@@ -137,7 +137,6 @@ jobs:
         export INPUTS_UPDATE_FIRMWARE_ONLINE="${{ github.event.inputs.UPDATE_FIRMWARE_ONLINE }}"
         export INPUTS_COMPILATION_INFORMATION="${{ github.event.inputs.COMPILATION_INFORMATION }}"
         export INPUTS_PACKAGING_FIRMWARE="${{ github.event.inputs.PACKAGING_FIRMWARE }}"
-        # 覆盖使用仓库内的 common-main/common.sh，避免远程版本的早期 Makefile 探测在克隆前触发
         cp -Rf ${GITHUB_WORKSPACE}/common-main/common.sh ${GITHUB_WORKSPACE}/build/${{ env.FOLDER_NAME }}/common.sh
         chmod +x ${GITHUB_WORKSPACE}/build/${{ env.FOLDER_NAME }}/common.sh
         source build/${{ env.FOLDER_NAME }}/common.sh && Diy_menu1
@@ -173,30 +172,7 @@ jobs:
       if: env.REPO_TOKEN
       run: |
         cd openwrt
-        source ${BUILD_PATH}/common.sh
-        if ! declare -F Diy_ORTALWRT >/dev/null; then
-          cat > ${BUILD_PATH}/diy_ortalwrt.sh <<'PATCH'
-function Diy_ORTALWRT() {
-  cd ${HOME_PATH}
-  if [[ "${REPO_BRANCH}" =~ (openwrt-18.06|openwrt-18.06-k5.4|openwrt-21.02|openwrt-24.10) ]]; then
-    if [[ -d "${HOME_PATH}/build/common/Share/v2raya" ]]; then
-      rm -rf ${HOME_PATH}/feeds/helloworld/v2raya
-      cp -Rf ${HOME_PATH}/build/common/Share/v2raya ${HOME_PATH}/feeds/helloworld/v2raya
-    fi
-  fi
-  if [[ "${REPO_BRANCH}" =~ (openwrt-18.06|openwrt-18.06-k5.4) ]]; then
-    rm -rf ${HOME_PATH}/feeds/packages/lang/node
-    git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-22.03 ${HOME_PATH}/feeds/packages/lang/node
-    if [[ -d "${HOME_PATH}/build/common/Share/bmx6" ]]; then
-      rm -rf ${HOME_PATH}/feeds/routing/bmx6
-      cp -Rf ${HOME_PATH}/build/common/Share/bmx6 ${HOME_PATH}/feeds/routing/bmx6
-    fi
-  fi
-}
-PATCH
-          source ${BUILD_PATH}/diy_ortalwrt.sh
-        fi
-        Diy_menu3
+        source ${BUILD_PATH}/common.sh && Diy_menu3
  
     - name: 加载自定义设置
       if: env.REPO_TOKEN
