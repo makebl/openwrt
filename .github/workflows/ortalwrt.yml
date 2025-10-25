@@ -8,17 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       REPO_BRANCH:
-        description: '天灵源码-请选择分支'
+        description: 'ortalwrt-请选择分支'
         required: true
-        default: 'openwrt-23.05'
+        default: 'main'
         type: choice
         options:
-          - 'openwrt-23.05'
-          - 'openwrt-24.10'          
-          - 'openwrt-21.02'
-          - 'openwrt-18.06'
-          - 'openwrt-18.06-k5.4'
-          - 'master'
+          - 'main'
+          - 'owrt'          
       CONFIG_FILE:
         description: '请选择[seed文件夹内]的配置文件'
         required: true
@@ -26,7 +22,7 @@ on:
         type: choice
         options:
           - 'x86_64'
-          - 'aarch64'
+          - 'ipq60'
       CPU_SELECTION:
         description: 'CPU优选,增加编译速度'
         required: true
@@ -128,7 +124,7 @@ jobs:
     - name: 检测文件和对比上游版本
       run: |
         cd ${GITHUB_WORKSPACE}
-        bash <(curl -fsSL https://raw.githubusercontent.com/shidahuilang/common/main/custom/first.sh)
+        bash <(curl -fsSL https://raw.githubusercontent.com/makebl/common/main/custom/first.sh)
         source ${GITHUB_WORKSPACE}/build/${{ env.FOLDER_NAME }}/settings.ini
         export INPUTS_REPO_BRANCH="${{ github.event.inputs.REPO_BRANCH }}"
         export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
