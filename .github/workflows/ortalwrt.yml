@@ -3,7 +3,7 @@
 #
 #
 
-name: Immortalwrt-VIKINGYFY
+name: ortalwrt
 on:
   workflow_dispatch:
     inputs:
