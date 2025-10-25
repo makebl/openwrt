@@ -103,7 +103,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Immortalwrt]
+        target: [ortalwrt]
         
         # 请勿对 target: [Immortalwrt] 做任何修改
         
