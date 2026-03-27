@@ -113,12 +113,13 @@ env:
   WX_TOKEN: ${{ secrets.WX_TOKEN }}
   CURL: ${{ secrets.CURL }}
   TZ: Asia/Shanghai
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     name: 启动"${{ matrix.target }}-${{ github.event.inputs.REPO_BRANCH }}"触发编译
     runs-on: ubuntu-22.04
-    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
+    if: ${{ github.event.repository.owner.id == github.event.sender.id }}
     
     env:
       FOLDER_NAME: ${{ matrix.target }}
@@ -253,7 +254,7 @@ jobs:
       with:
         token: ${{ secrets.REPO_TOKEN }}
         repository: ${{ github.repository }}
-        retain_min: ${{ env.RETAIN_MINUTE }}
+        retain_days: ${{ env.RETAIN_MINUTE }}
     
     - name: 清理releases
       continue-on-error: true
