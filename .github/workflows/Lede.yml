@@ -219,11 +219,11 @@ jobs:
         source ${BUILD_PATH}/common.sh && Diy_menu5
     
     - name: SSH远程连接服务器
-      uses: db-one/debugger-action@main
       if: env.SSH_ACTIONS == 'true' || (github.event.inputs.SSH_ACTION == 'true')
-      env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      timeout-minutes: 32
+      run: |
+        chmod +x ${GITHUB_WORKSPACE}/openwrt/build/debug-ssh.sh
+        /bin/bash "${GITHUB_WORKSPACE}/openwrt/build/debug-ssh.sh"
 
     - name: SSH远程调试
       if: env.Build_SSH == 'true'
